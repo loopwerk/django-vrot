@@ -1,0 +1,91 @@
+[project]
+name = "django-vrot"
+version = "0.2.0"
+description = "A collection of Django templatetags and middleware."
+authors = [
+    {name = "Kevin Renskers", email = "kevin@loopwerk.io"},
+]
+license = "MIT"
+license-files = [ "LICENSE" ]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "django>=3.2.0",
+]
+keywords = [
+    "django",
+    "templatetags",
+    "middleware",
+    "timezone",
+    "localization",
+    "template",
+    "filters",
+    "humanize",
+    "active-link",
+    "query-params",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: JavaScript",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "pytest-django>=4.10.0",
+    "ruff>=0.11.2",
+    "freezegun>=1.5.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/loopwerk/django-vrot/"
+Repository = "https://github.com/loopwerk/django-vrot.git"
+Issues = "https://github.com/loopwerk/django-vrot/issues"
+
+[build-system]
+requires = ["uv_build>=0.7.19,<0.8.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "vrot"
+module-root = ""
+
+[tool.uv]
+package = true
+
+[tool.ruff]
+line-length = 120
+lint.extend-select = ["I", "N"]
+
+[tool.mypy]
+disable_error_code = ["import-untyped"]
+warn_redundant_casts = true
+check_untyped_defs = true
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+python_files = "test*.py"
+filterwarnings = ["ignore::DeprecationWarning"]

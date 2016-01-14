@@ -1,1 +1,0 @@
-pip install -e git://github.com/kevinrenskers/django-vrot.git#egg=django-vrot
