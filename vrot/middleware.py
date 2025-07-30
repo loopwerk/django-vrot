@@ -1,4 +1,5 @@
 from typing import Callable
+from urllib.parse import unquote
 from zoneinfo import ZoneInfo
 
 from django.http import HttpRequest, HttpResponse
@@ -33,6 +34,8 @@ class TimezoneMiddleware:
         tzname = request.COOKIES.get("timezone")
         if tzname:
             try:
+                # Decode URL-encoded timezone name (e.g., "Europe%2FAmsterdam" -> "Europe/Amsterdam")
+                tzname = unquote(tzname)
                 timezone.activate(ZoneInfo(tzname))
             except Exception:
                 timezone.deactivate()  # fallback to UTC

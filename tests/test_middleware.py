@@ -96,3 +96,42 @@ class TestTimezoneMiddleware:
         # Verify timezone was active during request
         assert isinstance(captured_timezone, ZoneInfo)
         assert str(captured_timezone) == "Asia/Tokyo"
+
+    def test_url_encoded_timezone_cookie(self, middleware, request_factory):
+        """With URL-encoded timezone cookie (like from browser), should decode and activate"""
+        request = request_factory.get("/")
+        # Simulate browser encoding: Europe/Amsterdam -> Europe%2FAmsterdam
+        request.COOKIES = {"timezone": "Europe%2FAmsterdam"}
+
+        middleware(request)
+
+        # Should decode and activate the timezone
+        current_tz = timezone.get_current_timezone()
+        assert isinstance(current_tz, ZoneInfo)
+        assert str(current_tz) == "Europe/Amsterdam"
+
+    def test_complex_url_encoded_timezone_cookie(self, middleware, request_factory):
+        """With complex URL-encoded timezone, should decode properly"""
+        request = request_factory.get("/")
+        # Test timezone with spaces (hypothetical): "America/New York" -> "America%2FNew%20York"
+        request.COOKIES = {"timezone": "America%2FChicago"}
+
+        middleware(request)
+
+        current_tz = timezone.get_current_timezone()
+        assert isinstance(current_tz, ZoneInfo)
+        assert str(current_tz) == "America/Chicago"
+
+    def test_malformed_url_encoded_timezone(self, middleware, request_factory):
+        """With malformed URL-encoded timezone, should fall back to default"""
+        request = request_factory.get("/")
+        # Invalid encoded timezone
+        request.COOKIES = {"timezone": "Invalid%2FTimezone"}
+
+        # Set a known timezone first
+        timezone.activate(ZoneInfo("Europe/London"))
+
+        middleware(request)
+
+        # Should fall back to default due to invalid timezone
+        assert timezone.get_current_timezone() == timezone.get_default_timezone()

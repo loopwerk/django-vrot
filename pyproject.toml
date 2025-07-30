@@ -1,6 +1,6 @@
 [project]
 name = "django-vrot"
-version = "0.2.0"
+version = "0.3.0"
 description = "A collection of Django templatetags and middleware."
 authors = [
     {name = "Kevin Renskers", email = "kevin@loopwerk.io"},
