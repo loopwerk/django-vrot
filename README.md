@@ -63,9 +63,7 @@ Renders a time element that will be converted to the user's local timezone via J
 Output:
 
 ```html
-<time datetime="2024-05-19T10:34:00+02:00" class="local-time"
-  >May 19, 2024 at 10:34 AM</time
->
+<time datetime="2024-05-19T10:34:00+02:00" class="local-time">May 19, 2024 at 10:34 AM</time>
 ```
 
 #### `humantime` - Human-friendly time display
@@ -85,14 +83,14 @@ Outputs:
 #### `active_link` - Highlight active menu items
 
 ```django
-<li class="{% active_link 'blog:index' 'active' %}">
+<li class="{% active_link 'blog:index' %}">
     <a href="{% url 'blog:index' %}">Blog</a>
 </li>
 ```
 
 Parameters:
 
-- `viewname`: The name of the view (including namespace)
+- `viewname`: The name of the view (including namespace, if any)
 - `css_class`: CSS class to apply when active (default: "menu-active")
 - `css_inactive_class`: CSS class when inactive (default: "")
 - `strict`: If True, requires exact path match (default: False)
@@ -135,7 +133,7 @@ For more details, see: https://www.loopwerk.io/articles/2025/django-local-times/
 ## Requirements
 
 - Django >= 3.2
-- Python >= 3.13
+- Python >= 3.9
 
 ## License
 
